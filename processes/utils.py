@@ -3,7 +3,7 @@ from .config import SCALE, SET
 import numpy as np
 
 def get_image_arr(name = "im0", greyscale=False):
-    img = Image.open(f"stereoData/{SET}/{name}.png")
+    img = Image.open(f"/Users/mechkarov/Desktop/stereoData/{SET}/{name}.png")
     width, height = img.size
     img = img.resize((int(width/SCALE), int(height/SCALE)))
     if greyscale:
