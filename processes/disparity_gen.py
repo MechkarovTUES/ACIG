@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-import  matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 def get_disparity_map(left_image, right_image, multiplier):
     stereo = cv2.StereoSGBM_create(minDisparity=0, numDisparities=16 * multiplier, blockSize=19)

@@ -9,6 +9,8 @@ def get_points(distances, image_arr):
 
             if Z is None:
                 continue
-            points.append([X, Y, Z, r, g, b])  
+            points.append([X, Y, Z, r, g, b]) 
+        progress = int((row / distances.shape[0]) * 100) 
+        print(f"\rGenerating Point cloud: {progress}% done", end="", flush=True)
     return points  
 

@@ -16,8 +16,9 @@ def get_depth_map(disparity_map):
                 Z = 0
             Y = row
             X = col
-
             depth[row, col] = [X, Y, Z]
+        progress = int((row / disparity_map.shape[0]) * 100)
+        print(f"\rGenerating Depth cloud: {progress}% done", end="", flush=True)       
     return depth
         
 def show_depth_map(depth_map):
