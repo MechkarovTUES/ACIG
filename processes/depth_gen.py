@@ -1,4 +1,5 @@
 from .config import BASELINE, FOCAL_PX
+from .utils import geo_coordinates_map
 import numpy as np
 import cv2
 
@@ -14,8 +15,8 @@ def get_depth_map(disparity_map):
                 Z = (BASELINE * FOCAL_PX) / (disparity_Px)
             else:
                 Z = 0
-            Y = row
-            X = col
+            Y, X = geo_coordinates_map(cam = "right", x=col, y=row)
+            # Y, X = row, col
             depth[row, col] = [X, Y, Z]
         progress = int((row / disparity_map.shape[0]) * 100)
         print(f"\rGenerating Depth cloud: {progress}% done", end="", flush=True)       
