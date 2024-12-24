@@ -37,12 +37,12 @@ def capture(dir, id):
         "altitude": environment_state.geo_point.altitude,
         "height": -environment_state.position.z_val  # Height above ground
     }
-    json_save(f"{dir}/im{id}_0.png", geo_coords)
-    json_save(f"{dir}/im{id}_1.png",geo_coords)
+    json_save(f"{dir}/im{id}_0.png", f"{dir}/im{id}_1.png", geo_coords)
 
-def json_save(image_path, geo_coords):
+def json_save(cam_left_path, cam_right_path, geo_coords):
     image_data = {
-        "image_path": image_path,
+        "left": cam_left_path,
+        "right": cam_right_path,
         "geo_coordinates": {
             "longitude": geo_coords['longitude'],
             "latitude": geo_coords['latitude'],

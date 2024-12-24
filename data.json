@@ -1,37 +1,21 @@
 [
     {
-        "image_path": "data/im1_0.png",
+        "left": "data/im1_0.png",
+        "right": "data/im1_1.png",
         "geo_coordinates": {
             "longitude": 149.16523000000032,
             "latitude": -35.36326099999756,
-            "altitude": 598.7669677734375,
+            "altitude": 598.7666625976562,
             "height": 10
         }
     },
     {
-        "image_path": "data/im1_1.png",
+        "left": "data/im2_0.png",
+        "right": "data/im2_1.png",
         "geo_coordinates": {
-            "longitude": 149.16523000000032,
-            "latitude": -35.36326099999756,
-            "altitude": 598.7669677734375,
-            "height": 10
-        }
-    },
-    {
-        "image_path": "data/im2_0.png",
-        "geo_coordinates": {
-            "longitude": 149.1652858927127,
-            "latitude": -35.363260999984185,
-            "altitude": 598.6921997070312,
-            "height": 10
-        }
-    },
-    {
-        "image_path": "data/im2_1.png",
-        "geo_coordinates": {
-            "longitude": 149.1652858927127,
-            "latitude": -35.363260999984185,
-            "altitude": 598.6921997070312,
+            "longitude": 149.1652858806254,
+            "latitude": -35.36326099998385,
+            "altitude": 598.6917114257812,
             "height": 10
         }
     }
