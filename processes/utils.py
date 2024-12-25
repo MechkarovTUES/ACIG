@@ -1,12 +1,12 @@
 from PIL import Image, ImageFilter
-from .config import SCALE, FOV, HEIGHT, ASPECT_RATIO, EARTH_CIRCUMFERENCE_METERS
+from .config import SCALE, FOV, HEIGHT, ASPECT_RATIO, EARTH_CIRCUMFERENCE_METERS, ID
 import numpy as np
 import os, json, math
 
-def get_image_arr(name = "data.json", id = 0, cam = "left", greyscale=False):
+def get_image_arr(name = "data.json", cam = "left", greyscale=False):
     data = load_json(name)
 
-    img = Image.open(f"{data[id][cam]}")
+    img = Image.open(f"{data[ID][cam]}")
     width, height = img.size
     img = img.resize((int(width/SCALE), int(height/SCALE)))
     if greyscale:
@@ -44,19 +44,20 @@ def get_geo_coordinates(name = "data.json", id = 0):
     data = load_json(name)
     return data[id]['geo_coordinates']
 
-def geo_coordinates_map(name = "data.json", id = 0, cam = "left", x = 0, y = 0):
+def geo_coordinates_map(name = "data.json", cam = "left", x = 0, y = 0):
     width, height = image_dimensions()
 
     data = load_json(name)
-    img = Image.open(f"{data[id][cam]}")
+    img = Image.open(f"{data[ID][cam]}")
     px_w, px_h = img.size
+    px_w, px_h = px_w / SCALE, px_h / SCALE
 
     meters_per_pixel_h = width / px_w
     meters_per_pixel_v = height / px_h
 
     # Degrees per pixel
     lat_per_pixel = meters_per_pixel_v / EARTH_CIRCUMFERENCE_METERS
-    lon_per_pixel = meters_per_pixel_h / (EARTH_CIRCUMFERENCE_METERS * math.cos(math.radians(data[id]['geo_coordinates']['latitude'])))
+    lon_per_pixel = meters_per_pixel_h / (EARTH_CIRCUMFERENCE_METERS * math.cos(math.radians(data[ID]['geo_coordinates']['latitude'])))
 
     # Compute offsets from the center of the image
     center_x = px_w // 2
@@ -66,7 +67,7 @@ def geo_coordinates_map(name = "data.json", id = 0, cam = "left", x = 0, y = 0):
     y_offset = y - center_y
 
     # Calculate new latitude and longitude
-    target_lat = data[id]['geo_coordinates']['latitude'] - (y_offset * lat_per_pixel)
-    target_lon = data[id]['geo_coordinates']['longitude'] + (x_offset * lon_per_pixel)
+    target_lat = data[ID]['geo_coordinates']['latitude'] - (y_offset * lat_per_pixel)
+    target_lon = data[ID]['geo_coordinates']['longitude'] + (x_offset * lon_per_pixel)
 
     return target_lat, target_lon

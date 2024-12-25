@@ -12,10 +12,10 @@ def get_depth_map(disparity_map):
             disparity_Px = disparity_map[row, col]
             # Calculate world coordinates using pre-derived formulas (similar triangles)
             if disparity_Px > 0:
-                Z = (BASELINE * FOCAL_PX) / (disparity_Px)
+                Z = ((BASELINE * FOCAL_PX) / (disparity_Px)) * -1
             else:
                 Z = 0
-            Y, X = geo_coordinates_map(cam = "right", x=col, y=row)
+            Y, X = geo_coordinates_map(cam = "right", x = col, y = row)
             # Y, X = row, col
             depth[row, col] = [X, Y, Z]
         progress = int((row / disparity_map.shape[0]) * 100)

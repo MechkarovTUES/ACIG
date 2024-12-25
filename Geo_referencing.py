@@ -2,30 +2,38 @@ import numpy as np
 import open3d as o3d
 from processes.utils import get_geo_coordinates
 # import open3d.visualization.gui as gui  
-data = np.loadtxt("generated-cloud.txt")
+data = np.loadtxt("generated-cloud1.txt")
 points = data[:, :3]  # (x, y, z)
 colors = data[:, 3:]  # (r, g, b)
 
-# Filter NaN points
-valid_mask = np.all(np.isfinite(points), axis=1)
+# Filter NaN and z =0 points
+finite_mask = np.isfinite(points).all(axis=1)
+z_non_zero_mask = points[:, 2] != 0
+valid_mask = finite_mask & z_non_zero_mask
 points = points[valid_mask]
 colors = colors[valid_mask]
+
+z_threshold = 10
+z = points[:, 2]
+non_outlier_mask = np.abs(z - np.mean(z)) <= z_threshold * np.std(z)
+points = points[non_outlier_mask]
+colors = colors[non_outlier_mask]
 
 # Convert any NaN in colors to 255 and then normalize from [0, 255] to [0, 1]
 colors = np.nan_to_num(colors, nan=255) / 255.0
 
 geo_coords = get_geo_coordinates(id=0)
 print(geo_coords)
-# Remove outliers in z using a threshold
+
 scale_factor = 1e7
 points[:, 0] = (points[:, 0] - geo_coords['longitude']) * scale_factor
 points[:, 1] = (points[:, 1] - geo_coords["latitude"]) * scale_factor
-points[:, 2] = points[:, 2] - points[:, 2].min()
-z_threshold = 1
-z = points[:, 2]
-non_outlier_mask = np.abs(z - np.mean(z)) <= z_threshold * np.std(z)
-points = points[non_outlier_mask]
-colors = colors[non_outlier_mask]
+# points[:, 2] = (points[:, 2] - points[:, 2].min()) * 3
+
+print("z before normalization:", points[:, 2].min(), points[:, 2].max())
+points[:, 2] = (points[:, 2] - points[:, 2].min()) * 3
+print("z after normalization:", points[:, 2].min(), points[:, 2].max())
+
 
 # Normalize z values to start from 0
 # points[:, 2] = points[:, 2] - points[:, 2].min()
@@ -34,7 +42,9 @@ colors = colors[non_outlier_mask]
 pcd = o3d.geometry.PointCloud()
 pcd.points = o3d.utility.Vector3dVector(points)
 pcd.colors = o3d.utility.Vector3dVector(colors)
-# pcd = pcd.voxel_down_sample(voxel_size=0.05) 
+print("Original point count:", len(pcd.points))
+down_pcd = pcd.voxel_down_sample(voxel_size=6.0)
+print("Downsampled point count:", len(down_pcd.points))
 
 
 
@@ -69,16 +79,16 @@ def pick_points_with_open3d(pcd):
     return vis.get_picked_points()
 
 # Pick points interactively
-picked_indices = pick_points_with_open3d(pcd)
+picked_indices = pick_points_with_open3d(down_pcd)
 print("Picked Points:")
 for idx in picked_indices:
     x, y, z = points[idx]
     x = (x /scale_factor) + geo_coords['longitude']
     y = (y /scale_factor) + geo_coords['latitude']
-    print(f"Index: {idx}, Coordinates: {x, y, z}")
+    print(f"Index: {idx}, Longitude: {x} Latitude: {y} | z: {z}")
 
 # Visualize using Open3D's interactive viewer
-# o3d.visualization.draw_geometries([mesh],
+# o3d.visualization.draw_geometries([down_pcd],
 #                                   window_name="Open3D Point Cloud",
 #                                   width=1024, height=768,
 #                                   point_show_normal=False)

@@ -1,11 +1,12 @@
 # SET SELECTION
 # -----------------------------
 SCALE = 4
-SET = "synthetic2/2"
+ID = 0
 
 FOV = 90
 HEIGHT = 10
 ASPECT_RATIO = 4/3
+
 
 
 # CAMERA PARAMETERS
