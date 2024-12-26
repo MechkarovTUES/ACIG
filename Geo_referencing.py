@@ -43,7 +43,7 @@ pcd = o3d.geometry.PointCloud()
 pcd.points = o3d.utility.Vector3dVector(points)
 pcd.colors = o3d.utility.Vector3dVector(colors)
 print("Original point count:", len(pcd.points))
-down_pcd = pcd.voxel_down_sample(voxel_size=6.0)
+down_pcd = pcd.voxel_down_sample(voxel_size=3.0)
 print("Downsampled point count:", len(down_pcd.points))
 
 

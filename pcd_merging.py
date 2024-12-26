@@ -13,7 +13,7 @@ def load_pcd(file_path):
     points = points[valid_mask]
     colors = colors[valid_mask]
 
-    z_threshold = 10
+    z_threshold = 4
     z = points[:, 2]
     non_outlier_mask = np.abs(z - np.mean(z)) <= z_threshold * np.std(z)
     points = points[non_outlier_mask]
@@ -25,7 +25,7 @@ def load_pcd(file_path):
 
     scale_factor = 1e7
     if file_path == "generated-cloud2.txt":
-        points[:, 0] = ((points[:, 0] - geo_coords['longitude']) * scale_factor) - 100
+        points[:, 0] = ((points[:, 0] - geo_coords['longitude']) * scale_factor) - 170
     else:
         points[:, 0] = (points[:, 0] - geo_coords['longitude']) * scale_factor
     points[:, 1] = (points[:, 1] - geo_coords["latitude"]) * scale_factor
@@ -91,4 +91,5 @@ o3d.visualization.draw_geometries([pcd2], window_name="PCD2")
 merged_pcd = pcd1 + pcd2
 # merged_pcd = merged_pcd.voxel_down_sample(voxel_size=3.0)
 # o3d.visualization.draw_geometries([pcd2], window_name="After Transformation")
-o3d.visualization.draw_geometries([merged_pcd], window_name="Merged Point Cloud")
+# o3d.visualization.draw_geometries([merged_pcd], window_name="Merged Point Cloud")
+o3d.visualization.draw_geometries([pcd1, pcd2], window_name="Merged Point Cloud")
