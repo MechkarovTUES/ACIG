@@ -1,7 +1,7 @@
 
 def get_points(distances, image_arr):
     points = []
-    # Iterate through every pixel.
+    # Checks every pixel in the depth map
     for row in range(distances.shape[0]): 
         for col in range(distances.shape[1]):
             [r, g, b] = image_arr[row, col]
