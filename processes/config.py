@@ -1,17 +1,17 @@
 # SET SELECTION
 # -----------------------------
-SCALE = 4
-ID = 0
-
-FOV = 90
-HEIGHT = 10
-ASPECT_RATIO = 4/3
-
-
+JSON = "data1.json"
+SCALE = 4 # 4:1
+ID =4
 
 # CAMERA PARAMETERS
 # -----------------------------
-FOCAL_PX=1926.5
-BASELINE=56.46
+FOCAL_PX=1000.0
+BASELINE=0.01 
+FOV = 90
+ASPECT_RATIO = 4/3
 
-EARTH_CIRCUMFERENCE_METERS = 111320
+# Geo-referencing parameteres
+# -----------------------------
+HEIGHT = 10 # meters
+METERS_PER_DEGREE_LAT = 111320
