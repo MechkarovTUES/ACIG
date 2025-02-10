@@ -1,10 +1,10 @@
 from PIL import Image, ImageFilter
-from .config import SCALE, FOV, HEIGHT, ASPECT_RATIO, EARTH_CIRCUMFERENCE_METERS, ID
+from .config import SCALE, FOV, HEIGHT, ASPECT_RATIO, ID, JSON, METERS_PER_DEGREE_LAT
 import numpy as np
 import os, json, math
 
-def get_image_arr(name = "data.json", cam = "left", greyscale=False):
-    data = load_json(name)
+def get_image_arr(cam = "left", greyscale=False):
+    data = load_json(JSON)
 
     img = Image.open(f"{data[ID][cam]}")
     width, height = img.size
@@ -40,15 +40,16 @@ def image_dimensions():
     height_meters= width_meters / ASPECT_RATIO
     return width_meters, height_meters
 
-def get_geo_coordinates(name = "data.json", id = 0):
-    data = load_json(name)
+def get_geo_coordinates(id = 0):
+    data = load_json(JSON)
     return data[id]['geo_coordinates']
 
-def geo_coordinates_map(name = "data.json", cam = "left", x = 0, y = 0):
-    width, height = image_dimensions()
+def geo_coordinates_map(x = 0, y = 0):
+    width, height = image_dimensions() #Dimensipns of the image in meters
 
-    data = load_json(name)
-    img = Image.open(f"{data[ID][cam]}")
+    data = load_json(JSON)
+    img = Image.open(f"{data[ID]['right']}")
+    
     px_w, px_h = img.size
     px_w, px_h = px_w / SCALE, px_h / SCALE
 
@@ -56,18 +57,51 @@ def geo_coordinates_map(name = "data.json", cam = "left", x = 0, y = 0):
     meters_per_pixel_v = height / px_h
 
     # Degrees per pixel
-    lat_per_pixel = meters_per_pixel_v / EARTH_CIRCUMFERENCE_METERS
-    lon_per_pixel = meters_per_pixel_h / (EARTH_CIRCUMFERENCE_METERS * math.cos(math.radians(data[ID]['geo_coordinates']['latitude'])))
+    lat_per_pixel = meters_per_pixel_v / METERS_PER_DEGREE_LAT
+    lon_per_pixel = meters_per_pixel_h / (METERS_PER_DEGREE_LAT * math.cos(math.radians(data[ID]['geo_coordinates']['latitude'])))
 
     # Compute offsets from the center of the image
     center_x = px_w // 2
     center_y = px_h // 2
-
     x_offset = x - center_x
     y_offset = y - center_y
 
-    # Calculate new latitude and longitude
+    # Calculate true geographical latitude and longitude
     target_lat = data[ID]['geo_coordinates']['latitude'] - (y_offset * lat_per_pixel)
     target_lon = data[ID]['geo_coordinates']['longitude'] + (x_offset * lon_per_pixel)
 
     return target_lat, target_lon
+
+def geo_coordinates_map_2(x, y):
+    #Dimensipns of the image in meters
+    width_m, height_m = image_dimensions()
+
+    data = load_json(JSON)
+    img = Image.open(f"{data[ID]['right']}")
+    width_px, height_px = img.size
+    #@TODO: описание защо се дели на SCALE
+    width_px, height_px = width_px / SCALE, height_px / SCALE
+
+    meters_per_pixel_h = width_m / width_px
+    meters_per_pixel_v = height_m / height_px
+    # Calculate the displacement from the image center in pixels
+    displacement_x_px = x - (width_px / 2)
+    displacement_y_px = y - (height_px / 2)
+
+    # Convert pixel displacement to meters
+    displacement_x_m = (displacement_x_px / width_px) * width_m
+    displacement_y_m = (displacement_y_px / height_px) * height_m
+
+    earth_radius = 6378137.0  # Earth's radius in meters
+
+    # Calculate the change in latitude and longitude
+    delta_lat = (displacement_y_m / earth_radius) * (180 / np.pi)
+    delta_lon = (displacement_x_m / (earth_radius * np.cos(np.pi * data[ID]['geo_coordinates']['latitude'] / 180))) * (180 / np.pi)
+
+    # Calculate the estimated geographic coordinates of the bounding box center
+    lat = data[ID]['geo_coordinates']['latitude'] + delta_lat
+    lon = data[ID]['geo_coordinates']['longitude'] + delta_lon
+
+    return lat, lon
+
+
