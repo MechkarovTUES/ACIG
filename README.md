@@ -1,2 +1,2 @@
 # ACIG
-Automatic composite image generation for precision mapping using UAV imagery
+Automatic composite image generation for precision mapping via UAV imagery
