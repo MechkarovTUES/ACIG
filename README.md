@@ -120,8 +120,7 @@ source .venv/bin/activate
 ```
 .venv\Scripts\activate
 ```
-4. Install dependencies from requirements.txt
-
+4. **Install dependencies from requirements.txt**
+```
 pip install -r requirements.txt
-
-
+```
