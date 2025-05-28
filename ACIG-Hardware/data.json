@@ -1,0 +1,18 @@
+[
+    {
+        "left": "data/left/imageL0.png",
+        "right": "data/right/imageR0.png"
+    },
+    {
+        "left": "data/left/imageL1.png",
+        "right": "data/right/imageR1.png"
+    },
+    {
+        "left": "data/left/imageL2.png",
+        "right": "data/right/imageR2.png"
+    },
+    {
+        "left": "data/left/imageL3.png",
+        "right": "data/right/imageR3.png"
+    }
+]

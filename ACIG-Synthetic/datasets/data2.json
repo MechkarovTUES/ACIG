@@ -1,0 +1,32 @@
+[
+    {
+        "left": "datasets/data2/im1_1.png",
+        "right": "datasets/data2/im1_0.png",
+        "geo_coordinates": {
+            "longitude": 149.16519609277762,
+            "latitude": -35.363233989172656,
+            "altitude": 587.3433227539062,
+            "height": 10
+        }
+    },
+    {
+        "left": "datasets/data2/im2_1.png",
+        "right": "datasets/data2/im2_0.png",
+        "geo_coordinates": {
+            "longitude": 149.16523155612438,
+            "latitude": -35.363233989172656,
+            "altitude": 587.311279296875,
+            "height": 10
+        }
+    },
+    {
+        "left": "datasets/data2/im3_1.png",
+        "right": "datasets/data2/im3_0.png",
+        "geo_coordinates": {
+            "longitude": 149.16523155612438,
+            "latitude": -35.363233989172656,
+            "altitude": 587.311279296875,
+            "height": 10
+        }
+    }
+]
