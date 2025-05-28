@@ -62,6 +62,7 @@ _Imagery from **Synthetic Data Environment**. These are the left and right image
 
 ---
 4. **Georeferencing**
+
    In Synthetic Mode, local 3D points are transformed into geographic coordinates (latitude, longitude, altitude) by combining UAV GPS data with camera extrinsic parameters.
 
 <div align="center">
@@ -93,3 +94,28 @@ Index: 1184847, Longitude: 149.16544362451143 Latitude: -35.363039670033906 | z:
 </div>
 
 ---
+
+# Requirements
+
+This project uses a *conda environment* managed via ***conda-forge***. To set up your environment correctly, follow these steps:
+
+1. **Clone the repository**
+```
+git clone https://github.com/MechkarovTUES/ACIG.git
+cd ACIG
+```
+
+2. **Create the Conda environment from requirements.yml**
+```
+conda env create -f requirements.yml
+```
+***Make sure you have the conda-forge channel set with strict priority. If not, configure it as follows:***
+```
+conda config --add channels conda-forge
+conda config --set channel_priority strict
+```
+3. **Activate the environment**
+```
+conda activate ACIG_env
+```
+
