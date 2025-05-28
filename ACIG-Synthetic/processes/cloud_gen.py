@@ -22,9 +22,9 @@ def get_points(distances, image_arr):
     # Check for missing directories and create them if necessary   
     if not os.path.exists("./PCDs"):
         os.makedirs("./PCDs")
-    elif not os.path.exists(f"./{TXT_PATH}"):
+    if not os.path.exists(f"./{TXT_PATH}"):
         os.makedirs(f"./{TXT_PATH}")
-    elif not os.path.exists(f"./{TXT_PATH}/{DATASET}"):
+    if not os.path.exists(f"./{TXT_PATH}/{DATASET}"):
         os.makedirs(f"./{TXT_PATH}/{DATASET}")
 
     np.savetxt(f"./{TXT_PATH}/{DATASET}/generated-cloud{ID}.txt", points) 

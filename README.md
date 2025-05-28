@@ -2,6 +2,7 @@
 <div align="center">
   <img src="Assets/logo/logo.png" alt="ACIG Logo" width="50%">
 </div>
+
 ## Project Overview
 
 ACIG (Automatic Composite Image Generation) provides a cost-effective, modular solution for terrain mapping by reconstructing 3D point clouds from binocular stereo images. The system supports two deployment modes:
@@ -105,17 +106,22 @@ git clone https://github.com/MechkarovTUES/ACIG.git
 cd ACIG
 ```
 
-2. **Create the Conda environment from requirements.yml**
+2. **Create the Python virtual environment**
 ```
-conda env create -f requirements.yml
-```
-***Make sure you have the conda-forge channel set with strict priority. If not, configure it as follows:***
-```
-conda config --add channels conda-forge
-conda config --set channel_priority strict
+python -m venv .venv
 ```
 3. **Activate the environment**
+
+#### On Linux/macOS:
 ```
-conda activate ACIG_env
+source .venv/bin/activate
 ```
+#### On Windows:
+```
+.venv\Scripts\activate
+```
+4. Install dependencies from requirements.txt
+
+pip install -r requirements.txt
+
 

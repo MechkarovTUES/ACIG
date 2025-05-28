@@ -219,7 +219,7 @@ def save_pointcloud(pcd, filename="output_pointcloud", export_format="ply"):
     '''
     if not os.path.exists("./PCDs"):
         os.makedirs("./PCDs")
-    elif not os.path.exists(PLY_PATH):
+    if not os.path.exists(PLY_PATH):
         os.makedirs(PLY_PATH)
 
     path = f"{PLY_PATH}/{filename}.{export_format}"
