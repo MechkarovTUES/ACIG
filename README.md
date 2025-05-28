@@ -1,5 +1,7 @@
 # ACIG – Automatic Composite Image Generation
-<img src="Assets/logo/logo.png" alt="Sample Image" width="400" height="300">
+<div align="center">
+  <img src="Assets/logo/logo.png" alt="ACIG Logo" width="50%">
+</div>
 ## Project Overview
 
 ACIG (Automatic Composite Image Generation) provides a cost-effective, modular solution for terrain mapping by reconstructing 3D point clouds from binocular stereo images. The system supports two deployment modes:
