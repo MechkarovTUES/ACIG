@@ -3,9 +3,17 @@ import numpy as np
 from processes.utils import load_point_clouds, picked_points, \
 registration, save_pointcloud
 
+initRegistration = True # Set to True if you want to perform registration
 
-pcds = load_point_clouds(voxel_size=1.0, num=7)
-source = registration(pcds)
+num = 3
+pcds = load_point_clouds(voxel_size=1.0, num=7) # num is the number of point clouds to load from the TXT_format dir
+
+if len(pcds) == 0:
+    raise ValueError("No point clouds loaded. Please check the input files.")
+elif initRegistration:
+    source = registration(pcds)
+else:
+    source = pcds[num]
 
 def geo_reference(pcd):
     vis = o3d.visualization.VisualizerWithEditing()

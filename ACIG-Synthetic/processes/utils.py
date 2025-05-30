@@ -82,6 +82,7 @@ def geo_coordinates_map(x, y, idx=ID):
     px_w, px_h = (s/SCALE for s in img.size)
 
     width_m, height_m = image_dimensions()
+    # print(f"Meters for pixel:{(width_m / px_w)}")
     mpp_x = width_m  / px_w
     mpp_y = height_m / px_h
 
