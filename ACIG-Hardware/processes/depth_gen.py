@@ -1,6 +1,6 @@
 import numpy as np
 import cv2
-
+from .config import FX_PX, BASELINE
 
 def get_depth_map(disparity_map):
     depth = np.zeros((*disparity_map.shape, 3))
@@ -8,12 +8,14 @@ def get_depth_map(disparity_map):
     for row in range(disparity_map.shape[0]):
         for col in range(disparity_map.shape[1]):
             disparity_Px = disparity_map[row, col]
-            if disparity_Px > 0:
+            if disparity_Px > 0 and not np.isnan(disparity_Px):
                 Z = disparity_Px
+                Y, X = row, col
+                # Z = FX_PX * BASELINE / Z if Z != 0 else 0
+                depth[row, col] = [X, Y, Z]
             else:
                 Z = 0
-            Y, X = row, col
-            depth[row, col] = [X, Y, Z]
+            
         progress = int((row / disparity_map.shape[0]) * 100)
         print(f"\rGenerating Depth cloud: {progress}% done", end="", flush=True)       
     return depth

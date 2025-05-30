@@ -43,6 +43,24 @@ def rectify_set(imgL, imgR):
 
     return rectL, rectR
 
+def crop(img, x1, x2, y1, y2):
+    """
+    Crops the images to the specified coordinates.
+    
+    Parameters:
+    imgL: Left image
+    imgR: Right image
+    [x1, x2, y1, y2]: Coordinates for cropping in the format [x1, x2, y1, y2]
+    
+    Returns:
+    Cropped left and right images.
+    """
+    h, w = img.shape[:2] #both images are the same size
+    cropped = img[int(y1*SCALE):int(h - (y2*SCALE)), int(x1*SCALE): int(w - (x2*SCALE))]
+    # croppedR = imgR[int(y1*SCALE):int(h - (y2*SCALE)), int(x1*SCALE): int(w - (x2*SCALE))]
+    
+    return cropped
+
 def show_images(imgL, imgR):
     cv2.imshow("Rectified Left Image", imgL)
     cv2.imshow("Rectified Right Image", imgR)

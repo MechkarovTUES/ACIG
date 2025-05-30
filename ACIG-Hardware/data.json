@@ -14,5 +14,29 @@
     {
         "left": "data/left/imageL3.png",
         "right": "data/right/imageR3.png"
+    },
+    {
+        "left": "data/left/imageL4.png",
+        "right": "data/right/imageR4.png"
+    },
+    {
+        "left": "data/left/imageL5.png",
+        "right": "data/right/imageR5.png"
+    },
+    {
+        "left": "data/left/imageL6.png",
+        "right": "data/right/imageR6.png"
+    },
+    {
+        "left": "data/left/imageL7.png",
+        "right": "data/right/imageR7.png"
+    },
+    {
+        "left": "data/left/imageL8.png",
+        "right": "data/right/imageR8.png"
+    },
+    {
+        "left": "data/left/imageL9.png",
+        "right": "data/right/imageR9.png"
     }
 ]

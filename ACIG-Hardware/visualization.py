@@ -14,6 +14,7 @@ def load(file_path):
     data = np.loadtxt(file_path)
     points = data[:, :3]  # (x, y, z)
     colors = data[:, 3:]  # (r, g, b)
+    # points[:, 2] = points[:, 2] > points[:, 2].min()  # Filter out points with z <=0
 
     # Filter NaN values
     valid_mask = np.isfinite(points).all(axis=1)
@@ -22,13 +23,15 @@ def load(file_path):
     colors = np.nan_to_num(colors, nan=255) / 255.0
 
     z_scaler = -15
-
     points[:, 2] = (points[:, 2] - points[:, 2].min()) * z_scaler
 
     pcd = o3d.geometry.PointCloud()
     pcd.points = o3d.utility.Vector3dVector(points)
     pcd.colors = o3d.utility.Vector3dVector(colors)
-
+#     pcd, ind = pcd.remove_statistical_outlier(
+#     nb_neighbors=300,
+#     std_ratio=1.0
+# )
     return pcd
 
 def create_poisson_mesh(pcd, depth=9):
@@ -49,10 +52,26 @@ def create_poisson_mesh(pcd, depth=9):
     mesh.compute_vertex_normals()
     return mesh
 
-pcds = load_point_clouds(voxel_size=1.0, num=4)
+pcds = load_point_clouds(voxel_size=1.0, num=5)
 
-source = pcds[2]
+source = pcds[0]
 # source = create_poisson_mesh(source, depth=9) 
 source.normals = o3d.utility.Vector3dVector()
 
+def geo_reference(pcd):
+    vis = o3d.visualization.VisualizerWithEditing()
+    vis.create_window()
+    vis.add_geometry(pcd)
+    vis.run()  # Wait for user interaction
+    vis.destroy_window()
+    return vis.get_picked_points()
+
+
+# picked_indices = geo_reference(source)
+# print("Picked Points:")
+# for idx in picked_indices:
+#     x, y, z = source.points[idx]
+#     print(f"Index: {idx}, X: {x} Y: {y} | Depth: {z}")
+
+# source = create_poisson_mesh(source, depth=18)
 o3d.visualization.draw_geometries([source], window_name="Point Cloud", width=800, height=600, left=50, top=50, mesh_show_back_face=True)
