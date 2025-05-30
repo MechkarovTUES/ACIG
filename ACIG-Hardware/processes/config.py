@@ -2,7 +2,7 @@ import scipy.io
 # SET SELECTION
 # -----------------------------
 JSON = "data.json"
-ID = 4 #ID numeration starts from 0 | 0 -> Im1.stereo_set
+ID = 5 #ID numeration starts from 0 | 0 -> Im1.stereo_set
 CALIBRATION = "opencv_calib.mat"
 SCALE = 0.25 # Resize factor for images
 

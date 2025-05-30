@@ -52,9 +52,9 @@ def create_poisson_mesh(pcd, depth=9):
     mesh.compute_vertex_normals()
     return mesh
 
-pcds = load_point_clouds(voxel_size=1.0, num=5)
+pcds = load_point_clouds(voxel_size=1.0, num=6)
 
-source = pcds[0]
+source = pcds[5]
 # source = create_poisson_mesh(source, depth=9) 
 source.normals = o3d.utility.Vector3dVector()
 

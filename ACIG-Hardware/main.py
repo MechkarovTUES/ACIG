@@ -21,13 +21,13 @@ def main():
     show_images(left, right)
 
     disparity_map = get_disparity_map(left, right)
-    # np.save('disparity_map.npy', disparity_map)
+    np.save('disparity_map.npy', disparity_map)
     show_disparity_map(disparity_map) 
 
-    depth_map = get_depth_map(disparity_map)  
-    color = resize(get_image_arr(cam="left"))
-    color = crop(color, 60, 40, 100, 40) #Values are adaptable to the SCALING (config.py) automatically
-    points = get_points(depth_map, np.array(color))
+    # depth_map = get_depth_map(disparity_map)  
+    # color = resize(get_image_arr(cam="left"))
+    # color = crop(color, 60, 40, 100, 40) #Values are adaptable to the SCALING (config.py) automatically
+    # points = get_points(depth_map, np.array(color))
     
 if __name__ == "__main__": 
     main()
